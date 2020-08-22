@@ -5,7 +5,7 @@ var longlats =
   [80.24522, 12.98614],
   [80.24523, 12.98626]];
 
-const socket = io({ transports: ['websocket'] });
+// const socket = io({ transports: ['websocket'] });
 
 var count = 1;
 setInterval(function () {
@@ -16,6 +16,6 @@ setInterval(function () {
     item.Coordinate.Longitude = longlats[count][0];
     item.Coordinate.Latitude = longlats[count][1];
     count++;
-    socket.emit('lastKnownLocation', item);
+    //socket.emit('lastKnownLocation', item);
   }
 }, 5000);

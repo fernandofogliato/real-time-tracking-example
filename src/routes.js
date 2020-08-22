@@ -1,40 +1,31 @@
 import { Router } from 'express';
 import redis from 'redis';
 import io from 'socket.io'; 
+import path from 'path';
 
 const routes = new Router();
 const socket = io()
 
-var redisSubscriber = redis.createClient();
-var redisPublisher = redis.createClient();
+//var redisSubscriber = redis.createClient();
+//var redisPublisher = redis.createClient();
 
-redisSubscriber.on('subscribe', (channel, count) => {
-  console.log('client subscribed to ' + channel + ', ' + count + ' total subscriptions');
-});
+//redisSubscriber.on('subscribe', (channel, count) => {
+//  console.log('client subscribed to ' + channel + ', ' + count + ' total subscriptions');
+//});
 
-redisSubscriber.on('message', (channel, message) => {
-  console.log('client channel ' + channel + ': ' + message);
-  io.emit('locationUpdate', message);
-});
+//redisSubscriber.on('message', (channel, message) => {
+//  console.log('client channel ' + channel + ': ' + message);
+//  socket.emit('locationUpdate', message);
+//});
 
-
-routes.get('/', (req, res) => {
-  res.sendFile('../public/index.html', {
-    root: __dirname
-  });
-});
 
 routes.get('/publish', (req, res) => {
-  res.sendFile('../public/publisher.html', {
-    root: __dirname
-  });
+  res.sendFile(path.resolve('public/publisher.html'));
 });
 
 routes.get('/', (req, res) => {
-  redisSubscriber.subscribe('locationUpdate');
-  res.sendFile('../public/index.html', {
-    root: __dirname
-  });
+  //redisSubscriber.subscribe('locationUpdate');
+  res.sendFile(path.resolve('public/index.html'));
 });
 
 
