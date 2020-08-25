@@ -1,21 +1,14 @@
-var longlats =
-  [[80.24586, 12.98598],
-  [80.24537, 12.98597],
-  [80.24522, 12.98596],
-  [80.24522, 12.98614],
-  [80.24523, 12.98626]];
+const socket = io('ws://localhost:3000', { transports: ['websocket'] });
 
-// const socket = io({ transports: ['websocket'] });
+var lastLocation = [-48.996481, -28.466223];
 
-var count = 1;
-setInterval(function () {
-  console.log(count);
-  if (count < 10000) {
-    var item = {};
-    item.Coordinate = {};
-    item.Coordinate.Longitude = longlats[count][0];
-    item.Coordinate.Latitude = longlats[count][1];
-    count++;
-    //socket.emit('lastKnownLocation', item);
-  }
-}, 5000);
+setInterval(() => {
+  console.log('Publishing the location:' + lastLocation);
+  var item = {};
+  item.Coordinate = {};
+  item.Coordinate.Longitude = lastLocation[0];
+  item.Coordinate.Latitude = lastLocation[1];
+  socket.emit('lastKnownLocation', item);
+
+  lastLocation = [lastLocation[0] - 0.000100, lastLocation[1]];
+}, 1000);

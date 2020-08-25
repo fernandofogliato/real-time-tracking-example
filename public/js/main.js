@@ -46,22 +46,11 @@ function updateCoordinate(item) {
   featureToUpdate.getGeometry().setCoordinates(coord);
 }
 
-// var longlats =
-//   [[80.24586, 12.98598],
-//   [80.24537, 12.98597],
-//   [80.24522, 12.98596],
-//   [80.24522, 12.98614],
-//   [80.24523, 12.98626]]
+const socket = io('ws://localhost:3000', { transports: ['websocket'] });
 
-// var count = 1;
-// var item = {};
-
-// item.id = marker.getId;
-// item.Coordinate = {};
-
-// setInterval(function () {
-//   item.Coordinate.Longitude = longlats[count][0];
-//   item.Coordinate.Latitude = longlats[count][1];
-//   count++;
-//   updateCoordinate(item);
-// }, 5000);
+socket.on('locationUpdate', data => {
+  const coordinates = JSON.parse(data);
+  console.log('coordinates', coordinates);
+  var coord = ol.proj.fromLonLat([coordinates.Coordinate.Longitude, coordinates.Coordinate.Latitude]);
+  marker.getGeometry().setCoordinates(coord);
+});

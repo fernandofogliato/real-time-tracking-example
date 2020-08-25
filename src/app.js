@@ -1,8 +1,8 @@
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
-import helmet from 'helmet';
 import routes from './routes';
+import ws from './ws';
 
 class App {
   constructor() {
@@ -12,7 +12,6 @@ class App {
   }
 
   middlewares() {
-    this.server.use(helmet());
     this.server.use(cors());
     this.server.use(express.static('public'))
     this.server.use(bodyParser.urlencoded({
