@@ -106,3 +106,4 @@ dist
 
 # lock files
 package-lock.json
+*.lock
